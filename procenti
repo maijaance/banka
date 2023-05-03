@@ -1,0 +1,46 @@
+import datetime
+class Customer:
+    def __init__(self, name, surname, id, email):
+        self.name = name
+        self.surname = surname
+        self.id = id
+        self.email = email
+        self.datetime_created = datetime.datetime.now()
+        self.accounts = []
+
+    def status(self):
+        print(f"Client: {self.name} {self.surname} ({self.id}) {self.datetime_created}")
+
+    def add_account(self, number, currency, balance):
+        self.accounts.append(Account(number, currency, balance))
+    
+    def print_accounts(self):
+        for account in self.accounts:
+            account.status()
+    
+    def delete_account(self, number):
+        for account in self.accounts:
+            if account.number == number:
+                self.accounts.remove(account)
+                print(f"Konts ar numuru {number} ir dzēsts.")
+                break
+        else:
+            print(f"Konts ar numuru {number} nav atrasts.")
+
+    def print_transactions(self):
+        print()
+        print("-" * 100)
+        print(f"😀 Transaction report for customer {self.name} {self.surname}")     
+        for account in self.accounts:
+            account.print_transactions()
+
+    def total_balance(self):
+        total_balance = 0
+        for account in self.accounts:
+            total_balance += account.balance
+        return total_balance
+
+    def calculate_percentages(self):
+        total_balance = self.total_balance()
+        annual_interest_rate = 0.5 / 100
+        return total_balance * annual_interest_rate
